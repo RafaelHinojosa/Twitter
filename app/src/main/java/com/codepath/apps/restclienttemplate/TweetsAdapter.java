@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
 import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,14 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
 
+    String TAG = "TweetsAdapter";
     Context context;
     List<Tweet> tweets;
 
@@ -52,28 +57,81 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
     // Bind values based on the position of the element
 
-    // Define a viewholder
+    // Define a ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivProfileImage;
         TextView tvBody;
         TextView tvScreenName;
+        TextView tvCreatedAt;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
-
+            tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
         }
 
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
+            tvCreatedAt.setText(getTimeAgo(tweet.createdAt));
             Glide.with(context)
                     .load(tweet.user.profileImageUrl)
                     .into(ivProfileImage);
         }
+    }
+
+    public String getTimeAgo(String createdAt) {
+        final int SECOND_MILLIS = 1000;
+        final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
+        final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
+        final int DAY_MILLIS = 60 * HOUR_MILLIS;
+
+        // Format Example "Wed Oct 10 20:19:24 +0000 2018"
+        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
+        sdf.setLenient(true);
+
+        try {
+            long time = sdf.parse(createdAt).getTime();
+            long now = System.currentTimeMillis();
+
+            Log.d(TAG, "time = " + time);
+            Log.d(TAG, "now = " + now);
+
+            final long diff = now - time;
+
+            if(diff < MINUTE_MILLIS) {
+                return "just now";
+            }
+            else if(diff < 2 * MINUTE_MILLIS) {
+                return "a minute ago";
+            }
+            else if(diff < 50 * MINUTE_MILLIS) {
+                return diff / MINUTE_MILLIS + "m";
+            }
+            else if(diff < 90 * MINUTE_MILLIS) {
+                return "an hour ago";
+            }
+            else if(diff < 24 * HOUR_MILLIS) {
+                return diff / HOUR_MILLIS + "h";
+            }
+            else if(diff < 48 * HOUR_MILLIS) {
+                return "yesterday";
+            }
+            else {
+                return diff / DAY_MILLIS + "d";
+            }
+
+        } catch (ParseException e) {
+            Log.i(TAG, "getTimeAgo failed");
+            e.printStackTrace();
+        }
+
+
+        return "";
     }
 }
