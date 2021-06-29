@@ -9,7 +9,23 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTweets"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="621dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="0dp"
+        android:backgroundTint="#D82828"
+        android:text="Logout"
+        android:textColor="#FFFFFF"
+        tools:text="Logout" />
+
 </RelativeLayout>
