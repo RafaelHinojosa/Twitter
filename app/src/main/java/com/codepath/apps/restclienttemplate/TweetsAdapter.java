@@ -2,10 +2,12 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
 import android.media.Image;
+import android.os.Parcel;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,6 +45,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         return new ViewHolder(view);
     }
 
+    // Bind values based on the position of the element
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         // Get the data at position
@@ -55,16 +58,14 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         return tweets.size();
     }
 
-    // Bind values based on the position of the element
-
     // Define a ViewHolder
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivProfileImage;
         TextView tvBody;
         TextView tvScreenName;
         TextView tvCreatedAt;
+        ImageView ivMediaTimeLine;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,6 +73,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
+            ivMediaTimeLine = itemView.findViewById(R.id.ivMediaTimeLine);
         }
 
         public void bind(Tweet tweet) {
@@ -81,6 +83,18 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             Glide.with(context)
                     .load(tweet.user.profileImageUrl)
                     .into(ivProfileImage);
+            // Set image published if there is one
+            Log.d(TAG, tweet.media_url_https);
+            if(tweet.media_url_https != null) {
+                ivMediaTimeLine.setVisibility(View.VISIBLE);
+                Glide.with(context)
+                        .load(tweet.media_url_https)
+                        .into(ivMediaTimeLine);
+            }
+            else {
+                // Does not take space
+                ivMediaTimeLine.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -133,5 +147,17 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
 
         return "";
+    }
+
+    // Clear all the elements of the recycler
+    public void clear() {
+        tweets.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list to the recycler
+    public void addAll(List<Tweet> newList) {
+        tweets.addAll(newList);
+        notifyDataSetChanged();
     }
 }

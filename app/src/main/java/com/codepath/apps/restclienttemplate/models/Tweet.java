@@ -14,6 +14,7 @@ public class Tweet {
     public String body;
     public String createdAt;
     public User user;
+    public String media_url_https;
 
     // For the parcel library, we MUST implement an empty constructor and write @Parcel on top of the class
     public Tweet() {}
@@ -23,6 +24,19 @@ public class Tweet {
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+
+        // Follow the [] and {}. [] for JSONArray, {} for JSONObject
+        // https://developer.twitter.com/en/docs/twitter-api/v1/data-dictionary/object-model/entities
+        if(!jsonObject.isNull("extended_entities")) {
+            tweet.media_url_https = jsonObject
+                    .getJSONObject("extended_entities")
+                    .getJSONArray("media")
+                    .getJSONObject(0)
+                    .getString("media_url_https");
+        }
+        else {
+            tweet.media_url_https = "";
+        }
 
         return tweet;
     }

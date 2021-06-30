@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,11 +32,13 @@ public class TimelineActivity extends AppCompatActivity {
     public static final String TAG = "TimelineActivity";
     private final int REQUEST_CODE = 20;        // Can be any number but must be UNIQUE
 
+    List<Tweet> tweets;
+    TweetsAdapter adapter;
+
     TwitterClient client;
     RecyclerView rvTweets;
     Button btnLogout;
-    List<Tweet> tweets;
-    TweetsAdapter adapter;
+    private SwipeRefreshLayout swipeContainer;
 
 
     @Override
@@ -48,6 +51,7 @@ public class TimelineActivity extends AppCompatActivity {
         // Find the recycler view
         rvTweets = findViewById(R.id.rvTweets);
         btnLogout = findViewById(R.id.btnLogout);
+        swipeContainer = findViewById(R.id.swipeContainer);
 
         // Initialize the list of tweets and adapter
         tweets = new ArrayList<>();
@@ -56,6 +60,24 @@ public class TimelineActivity extends AppCompatActivity {
         // Recycler view setup: layout manager and the adapter
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
+
+        // Refresh Listener
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Hacer llamada asincrona
+                // Si exitosa, entonces
+                    // Clear de lo que hay en recycler view
+                    // addAll a lo que respondio
+                // Si no, Toast y seguimos con lo mismo
+                fetchTimelineAsync(0);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
         // Logout button setup
         btnLogout.setOnClickListener(new Button.OnClickListener() {
@@ -125,6 +147,31 @@ public class TimelineActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.e(TAG, "onFailure" + response, throwable);
 
+            }
+        });
+    }
+
+    // Updates Home Timeline when refreshed
+    public void fetchTimelineAsync(int page) {
+        client.getHomeTimeline(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                JSONArray jsonArray = json.jsonArray;
+
+                // Clear everything to replace it with the new tweets
+                try {
+                    adapter.clear();
+                    adapter.addAll(Tweet.fromJsonArray(jsonArray));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // Stop the refreshing circle and activity
+                swipeContainer.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d(TAG, "Failed to update: " + throwable.toString());
             }
         });
     }
