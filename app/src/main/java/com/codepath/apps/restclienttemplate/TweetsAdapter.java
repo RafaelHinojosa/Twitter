@@ -1,13 +1,10 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
-import android.media.Image;
-import android.os.Parcel;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -62,23 +59,26 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivProfileImage;
-        TextView tvBody;
         TextView tvScreenName;
+        TextView tvName;
+        TextView tvBody;
         TextView tvCreatedAt;
         ImageView ivMediaTimeLine;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
-            tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
+            tvName = itemView.findViewById(R.id.tvName);
+            tvBody = itemView.findViewById(R.id.tvBody);
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
             ivMediaTimeLine = itemView.findViewById(R.id.ivMediaTimeLine);
         }
 
         public void bind(Tweet tweet) {
-            tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
+            tvName.setText(tweet.user.name);
+            tvBody.setText(tweet.body);
             tvCreatedAt.setText(getTimeAgo(tweet.createdAt));
             Glide.with(context)
                     .load(tweet.user.profileImageUrl)
