@@ -69,4 +69,16 @@
         android:layout_toEndOf="@+id/ivProfileImage"
         android:textStyle="bold"
         tools:text="Ronaldinho" />
+
+    <Button
+        android:id="@+id/btnReply"
+        android:layout_width="63dp"
+        android:layout_height="43dp"
+        android:layout_below="@+id/ivMediaTimeLine"
+        android:layout_alignStart="@+id/tvBody"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="1dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableBottom="@android:drawable/ic_menu_set_as"
+        android:textSize="8sp" />
 </RelativeLayout>

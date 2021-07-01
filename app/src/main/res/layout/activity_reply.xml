@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="-4dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="105dp"
         app:counterEnabled="true"
         app:counterOverflowTextAppearance="@style/counterOverride"
         app:counterTextAppearance="@style/counterText">
@@ -29,7 +29,7 @@
             android:layout_marginTop="5dp"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="What's Happening?"
+            android:hint="Reply"
             android:inputType="textMultiLine"
             android:minLines="5"
             tools:layout_editor_absoluteX="88dp"
@@ -42,7 +42,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvCharCounter"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:text="@string/tweet" />
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/reply" />
+
+    <TextView
+        android:id="@+id/tvReplying"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="57dp"
+        android:text="Replying to @" />
+
+    <TextView
+        android:id="@+id/tvUserReplied"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="57dp"
+        android:layout_toEndOf="@+id/tvReplying" />
 </RelativeLayout>

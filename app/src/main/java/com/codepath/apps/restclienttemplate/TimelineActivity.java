@@ -30,7 +30,9 @@ import okhttp3.Headers;
 public class TimelineActivity extends AppCompatActivity {
 
     public static final String TAG = "TimelineActivity";
-    private final int REQUEST_CODE = 20;        // Can be any number but must be UNIQUE
+    // Can be any number but must be UNIQUE
+    public final int POST_REQUEST_CODE = 20;
+    public static final int REPLY_REQUEST_CODE = 25;
 
     List<Tweet> tweets;
     TweetsAdapter adapter;
@@ -61,6 +63,7 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
 
+        /*
         // Refresh Listener
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -78,6 +81,7 @@ public class TimelineActivity extends AppCompatActivity {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+        */
 
         // Logout button setup
         btnLogout.setOnClickListener(new Button.OnClickListener() {
@@ -105,7 +109,7 @@ public class TimelineActivity extends AppCompatActivity {
             // Compose (actionbar button) item has been selected
             // Intent to go from "this" to ComposeActivity
             Intent intent = new Intent(this, ComposeActivity.class);
-            startActivityForResult(intent, REQUEST_CODE);
+            startActivityForResult(intent, POST_REQUEST_CODE);
 
             return true;
         }
@@ -114,7 +118,8 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+        // If user posts
+        if(requestCode == POST_REQUEST_CODE && resultCode == RESULT_OK) {
             // Get data from intent (tweet)
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
             // Put the tweet in recycler view so we can see it
@@ -124,7 +129,20 @@ public class TimelineActivity extends AppCompatActivity {
             adapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);     // So it appears at the top
         }
-        super.onActivityResult(requestCode, resultCode, data);
+        // If user replies
+        else if(requestCode == REPLY_REQUEST_CODE && resultCode == RESULT_OK) {
+            // Get data from intent (tweet)
+            Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
+            // Put the tweet in recycler view so we can see it
+            // Modify data source of tweets (list of tweets) at the beginning of the list
+            tweets.add(0, tweet);
+            // Notify the adapter
+            adapter.notifyItemInserted(0);
+            rvTweets.smoothScrollToPosition(0);     // So it appears at the top
+        }
+        else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     private void populateHomeTimeLine() {

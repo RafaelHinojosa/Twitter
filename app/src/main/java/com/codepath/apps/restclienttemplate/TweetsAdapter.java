@@ -1,20 +1,25 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import org.jetbrains.annotations.NotNull;
+import org.parceler.Parcels;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,6 +28,7 @@ import java.util.Locale;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
 
+    private final int REQUEST_CODE = 25;
     String TAG = "TweetsAdapter";
     Context context;
     List<Tweet> tweets;
@@ -64,6 +70,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvBody;
         TextView tvCreatedAt;
         ImageView ivMediaTimeLine;
+        Button btnReply;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,9 +80,10 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody = itemView.findViewById(R.id.tvBody);
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
             ivMediaTimeLine = itemView.findViewById(R.id.ivMediaTimeLine);
+            btnReply = itemView.findViewById(R.id.btnReply);
         }
-
-        public void bind(Tweet tweet) {
+        // usually put the onclick on the bind method
+        public void bind(final Tweet tweet) {
             tvScreenName.setText(tweet.user.screenName);
             tvName.setText(tweet.user.name);
             tvBody.setText(tweet.body);
@@ -95,6 +103,20 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 // Does not take space
                 ivMediaTimeLine.setVisibility(View.GONE);
             }
+
+            // Reply button
+            btnReply.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ReplyActivity.class);
+                    // putExtra(nameId con el que lo voy a recibir, lo que le voy a mandar(el tweet))
+                    // I put the tweetId as the name because it will be a unique identifier for the tweets.
+                    intent.putExtra("tweetId", Parcels.wrap(tweet));
+
+                    // startActivityForResult is for activities so we make the context an activity
+                    ((TimelineActivity) context).startActivityForResult(intent, TimelineActivity.REPLY_REQUEST_CODE);
+                }
+            });
         }
     }
 
