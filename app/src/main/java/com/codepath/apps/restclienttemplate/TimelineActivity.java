@@ -63,7 +63,7 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
 
-        /*
+
         // Refresh Listener
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -81,7 +81,7 @@ public class TimelineActivity extends AppCompatActivity {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        */
+
 
         // Logout button setup
         btnLogout.setOnClickListener(new Button.OnClickListener() {
