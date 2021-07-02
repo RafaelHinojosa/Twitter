@@ -26,9 +26,11 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
+// TweetsAdapter contains a list of tweets as in item_tweet.xml and manages each tweet data
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
 
-    private final int REQUEST_CODE = 25;
     String TAG = "TweetsAdapter";
     Context context;
     List<Tweet> tweets;
@@ -39,7 +41,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         this.tweets = tweets;
     }
 
-    // For each row, inflate the Layout for a tweet
+    // For each row, inflate the Layout for a tweet (1 at a time)
     @NonNull
     @NotNull
     @Override
@@ -56,12 +58,13 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         holder.bind(tweet);
     }
 
+    // Gets number of tweets in Tweets list
     @Override
     public int getItemCount() {
         return tweets.size();
     }
 
-    // Define a ViewHolder
+    // Define a ViewHolder containing a specific tweet
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivProfileImage;
@@ -72,6 +75,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageView ivMediaTimeLine;
         Button btnReply;
 
+        // Associate variables with existing ids in item_tweet.xml
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
@@ -82,14 +86,18 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ivMediaTimeLine = itemView.findViewById(R.id.ivMediaTimeLine);
             btnReply = itemView.findViewById(R.id.btnReply);
         }
-        // usually put the onclick on the bind method
+
+        // Bind method changes the data of the components
         public void bind(final Tweet tweet) {
-            tvScreenName.setText(tweet.user.screenName);
+            String userName = "@" + tweet.user.screenName;
+            tvScreenName.setText(userName);
             tvName.setText(tweet.user.name);
             tvBody.setText(tweet.body);
             tvCreatedAt.setText(getTimeAgo(tweet.createdAt));
+            // Profile picture
             Glide.with(context)
                     .load(tweet.user.profileImageUrl)
+                    .transform(new RoundedCornersTransformation(200, 10))
                     .into(ivProfileImage);
             // Set image published if there is one
             Log.d(TAG, tweet.media_url_https);
@@ -97,6 +105,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 ivMediaTimeLine.setVisibility(View.VISIBLE);
                 Glide.with(context)
                         .load(tweet.media_url_https)
+                        //.transform(new RoundedCornersTransformation(40, 0))
                         .into(ivMediaTimeLine);
             }
             else {
@@ -105,21 +114,22 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             }
 
             // Reply button
+            // Usually set the onClickListener on the bind method
             btnReply.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ReplyActivity.class);
-                    // putExtra(nameId con el que lo voy a recibir, lo que le voy a mandar(el tweet))
-                    // I put the tweetId as the name because it will be a unique identifier for the tweets.
+                    // putExtra(name to identify this intent, what I am puting into the intent)
                     intent.putExtra("tweetId", Parcels.wrap(tweet));
-
-                    // startActivityForResult is for activities so we make the context an activity
+                    // StartActivityForResult is for activities so we make the context an activity
+                    // We'll expect a result in TimelineActivity.onActivityResult
                     ((TimelineActivity) context).startActivityForResult(intent, TimelineActivity.REPLY_REQUEST_CODE);
                 }
             });
         }
     }
 
+    // Returns how many time has passed since the post of a twitter, based on the actual time and the Tweet's creation
     public String getTimeAgo(String createdAt) {
         final int SECOND_MILLIS = 1000;
         final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -171,13 +181,14 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         return "";
     }
 
-    // Clear all the elements of the recycler
+    // Clear all the elements of the recycler view
     public void clear() {
         tweets.clear();
+        // When changing data, notify the adapter
         notifyDataSetChanged();
     }
 
-    // Add a list to the recycler
+    // Add a list of tweets to the recycler view
     public void addAll(List<Tweet> newList) {
         tweets.addAll(newList);
         notifyDataSetChanged();

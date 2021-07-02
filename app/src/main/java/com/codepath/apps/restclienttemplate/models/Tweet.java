@@ -8,9 +8,11 @@ import org.parceler.Parcel;
 import java.util.ArrayList;
 import java.util.List;
 
+// Parcelable class that contains the attributes of a tweet and some methods for it
 @Parcel
 public class Tweet {
 
+    // Tweet attributes
     public String body;
     public String createdAt;
     public User user;
@@ -20,6 +22,7 @@ public class Tweet {
     // For the parcel library, we MUST implement an empty constructor and write @Parcel on top of the class
     public Tweet() {}
 
+    // Returns a tweet created with the
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
         Tweet tweet = new Tweet();
         tweet.body = jsonObject.getString("text");
@@ -29,6 +32,7 @@ public class Tweet {
 
         // Follow the [] and {}. [] for JSONArray, {} for JSONObject
         // https://developer.twitter.com/en/docs/twitter-api/v1/data-dictionary/object-model/entities
+        // Getting the media url if there is one (posted image in a tweet)
         if(!jsonObject.isNull("extended_entities")) {
             tweet.media_url_https = jsonObject
                     .getJSONObject("extended_entities")

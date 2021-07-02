@@ -31,14 +31,15 @@ public class ReplyActivity extends AppCompatActivity {
     EditText etReply;
     Button btnReplyPublish;
 
-    TwitterClient client;
+    TwitterClient client;       // Used to get to Client.replyTweet()
 
     Tweet tweet;
 
+    // When the users clicks on the reply button, this activity is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reply);
+        setContentView(R.layout.activity_reply);        // layout of the act. is in activity_reply.xml
 
         client = TwitterApp.getRestClient(this);
 
@@ -49,19 +50,21 @@ public class ReplyActivity extends AppCompatActivity {
         tvCharCounter.setCounterEnabled(true);
         tvCharCounter.setCounterMaxLength(MAX_TWEET_LENGTH);
 
-        // Unwrap information from the replied tweet
+        // Unwrap information from the replied tweet (came from TweetsAdapter)
         tweet = Parcels.unwrap(getIntent().getParcelableExtra("tweetId"));
 
+        // Puts the username of the user's tweet you are replying of
         tvUserReplied.setText(tweet.user.screenName);
 
-
-        // Click listener to reply the tweet
+        // Click listener to make a http request and reply to the tweet
         btnReplyPublish.setOnClickListener(new View.OnClickListener() {
+            // When reply publish button is clicked
             @Override
             public void onClick(View v) {
                 String tweetId = tweet.id_str;
                 String tweetContent = etReply.getText().toString();
 
+                // Check if the tweet's number of characters are in bounds [1 - 280] characters
                 if(tweetContent.isEmpty()) {
                     Toast.makeText(ReplyActivity.this, "Sorry, your tweet cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
@@ -74,7 +77,7 @@ public class ReplyActivity extends AppCompatActivity {
                 // Tweet content is in bounds
                 Toast.makeText(ReplyActivity.this, tweetContent, Toast.LENGTH_SHORT).show();
 
-                // API Call to reply the tweet
+                // API Call to reply the tweet. Calls to Client.replyTweet()
                 client.replyTweet(tweetContent, tweetId, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
@@ -83,7 +86,7 @@ public class ReplyActivity extends AppCompatActivity {
                             Tweet tweet = Tweet.fromJson(json.jsonObject);
                             Log.i(TAG, "Replied Tweet: " + tweet.body);
 
-                            // Pass the data
+                            // Pass the data of the new tweet through the intent and sets the result as ok
                             Intent intent = new Intent();
                             intent.putExtra("tweet", Parcels.wrap(tweet));
                             setResult(RESULT_OK, intent);
@@ -94,6 +97,7 @@ public class ReplyActivity extends AppCompatActivity {
                         }
                     }
 
+                    // This executes if the status of the call is not success
                     @Override
                     public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                         Log.e(TAG, "onFailure to reply to tweet", throwable);

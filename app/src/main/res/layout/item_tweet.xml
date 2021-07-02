@@ -28,13 +28,14 @@
 
     <TextView
         android:id="@+id/tvBody"
-        android:autoLink="all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvScreenName"
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/ivProfileImage"
+        android:autoLink="all"
+        android:textColor="#000000"
         tools:text="This is my first tweet! " />
 
     <TextView
@@ -68,6 +69,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginBottom="2dp"
         android:layout_toEndOf="@+id/ivProfileImage"
+        android:textColor="#000000"
         android:textStyle="bold"
         tools:text="Ronaldinho" />
 
@@ -82,4 +84,5 @@
         android:backgroundTint="#FFFFFF"
         android:drawableBottom="@android:drawable/ic_menu_set_as"
         android:textSize="8sp" />
+
 </RelativeLayout>

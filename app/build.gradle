@@ -55,4 +55,6 @@ dependencies {
     annotationProcessor 'org.parceler:parceler:1.1.12'
     // Swipe Refresh Layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    // Transform photos
+    implementation 'jp.wasabeef:glide-transformations:4.1.0'
 }

@@ -27,6 +27,8 @@ import java.util.List;
 
 import okhttp3.Headers;
 
+
+// Activity for the Twitter timeline
 public class TimelineActivity extends AppCompatActivity {
 
     public static final String TAG = "TimelineActivity";
@@ -42,15 +44,17 @@ public class TimelineActivity extends AppCompatActivity {
     Button btnLogout;
     private SwipeRefreshLayout swipeContainer;
 
-
+    // Creates a timeline
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // The contentView will be the layout of activity_timeline.xml
         setContentView(R.layout.activity_timeline);
 
+        // Is set as a RestClient
         client = TwitterApp.getRestClient(this);
 
-        // Find the recycler view
+        // Associates the variables with the components in activity_timeline.xml
         rvTweets = findViewById(R.id.rvTweets);
         btnLogout = findViewById(R.id.btnLogout);
         swipeContainer = findViewById(R.id.swipeContainer);
@@ -64,18 +68,14 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setAdapter(adapter);
 
 
-        // Refresh Listener
+        // Sets an Refresh Listener to the Swipe Container
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Hacer llamada asincrona
-                // Si exitosa, entonces
-                    // Clear de lo que hay en recycler view
-                    // addAll a lo que respondio
-                // Si no, Toast y seguimos con lo mismo
                 fetchTimelineAsync(0);
             }
         });
+
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -95,20 +95,21 @@ public class TimelineActivity extends AppCompatActivity {
         populateHomeTimeLine();
     }
 
-    // Creates the options menu
+    // Creates the options menu where user can compose
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;    // so that the menu can be displayed
     }
 
-    // When the item on the action bar is clicked, go to compose (a Tweet)
+    // Checks if a menu item was clicked
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Compose (actionbar button) item has been selected
         if(item.getItemId() == R.id.compose) {
-            // Compose (actionbar button) item has been selected
-            // Intent to go from "this" to ComposeActivity
+            // Intent to go from "this" to ComposeActivity to compose a tweet
             Intent intent = new Intent(this, ComposeActivity.class);
+            // We will receive a result from the asynchronous call
             startActivityForResult(intent, POST_REQUEST_CODE);
 
             return true;
@@ -116,36 +117,41 @@ public class TimelineActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Method that makes data changes according to the http request done and the result of the call
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        // If user posts
+        // If user composed a tweet
         if(requestCode == POST_REQUEST_CODE && resultCode == RESULT_OK) {
             // Get data from intent (tweet)
+            // This tweet was sent from ComposeActivity
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
-            // Put the tweet in recycler view so we can see it
             // Modify data source of tweets (list of tweets) at the beginning of the list
             tweets.add(0, tweet);
             // Notify the adapter
             adapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);     // So it appears at the top
         }
-        // If user replies
+        // If user replied a tweet
         else if(requestCode == REPLY_REQUEST_CODE && resultCode == RESULT_OK) {
             // Get data from intent (tweet)
+            // This tweet was sent from ReplyActivity
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
-            // Put the tweet in recycler view so we can see it
-            // Modify data source of tweets (list of tweets) at the beginning of the list
+            // Put the new tweet at the top of the data source of the tweets (list of tweets)
             tweets.add(0, tweet);
             // Notify the adapter
             adapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);     // So it appears at the top
         }
         else {
+            // If other request made, create an onActivityResult instance with the parameters received
+            // We can add more ActivityResults according to the different http request that can be done
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
+    // Populates the home Timeline of the TimelineActivity
     private void populateHomeTimeLine() {
+        // Gets a list of tweets and add them to the list of tweets if succeeded
         client.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
@@ -176,7 +182,7 @@ public class TimelineActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 JSONArray jsonArray = json.jsonArray;
 
-                // Clear everything to replace it with the new tweets
+                // Clear everything to replace it with the new tweets got from the http request
                 try {
                     adapter.clear();
                     adapter.addAll(Tweet.fromJsonArray(jsonArray));
@@ -187,6 +193,7 @@ public class TimelineActivity extends AppCompatActivity {
                 swipeContainer.setRefreshing(false);
             }
 
+            // If the call status was not success
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.d(TAG, "Failed to update: " + throwable.toString());

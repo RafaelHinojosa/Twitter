@@ -19,6 +19,7 @@ import org.parceler.Parcels;
 
 import okhttp3.Headers;
 
+// Activity that allows user compose tweets
 public class ComposeActivity extends AppCompatActivity {
 
     public static final String TAG = "ComposeActivity";
@@ -30,10 +31,11 @@ public class ComposeActivity extends AppCompatActivity {
 
     TwitterClient client;
 
+    // When the users clicks on the compose icon on the menu, this activity starts (is created)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compose);
+        setContentView(R.layout.activity_compose);          // layout found in activity_compose.xml
 
         client = TwitterApp.getRestClient(this);
 
@@ -43,11 +45,14 @@ public class ComposeActivity extends AppCompatActivity {
         tvCharCounter.setCounterEnabled(true);
         tvCharCounter.setCounterMaxLength(MAX_TWEET_LENGTH);
 
-        // Click listener to publish the tweet
+        // Button's onClickListener to publish the tweet
         btnTweet.setOnClickListener(new View.OnClickListener() {
+            // Makes asynchronous call to the Twitter API to compose a tweet
             @Override
             public void onClick(View v) {
                 String tweetContent = etCompose.getText().toString();
+
+                // Checks that the tweet's body(content) is in bounds [1 - 280]
                 if(tweetContent.isEmpty()) {
                     Toast.makeText(ComposeActivity.this, "Sorry, your tweet cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
@@ -56,10 +61,12 @@ public class ComposeActivity extends AppCompatActivity {
                     Toast.makeText(ComposeActivity.this, "Sorry, your tweet is too long.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 // Tweet content is in bounds
                 Toast.makeText(ComposeActivity.this, tweetContent, Toast.LENGTH_SHORT).show();
                 // API Call to publish the tweet
                 client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
+                    // If the call status is success, it is obtained to be in the timeline
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                         Log.i(TAG, "onSuccess to publish tweet");
@@ -67,9 +74,11 @@ public class ComposeActivity extends AppCompatActivity {
                             Tweet tweet = Tweet.fromJson(json.jsonObject);
                             Log.i(TAG, "Published Tweet: " + tweet.body);
 
-                            // Pass the data
+                            // Pass the new tweet through an intent
                             Intent intent = new Intent();
+                            // This tweet will be received in TimelineActivity.onActivityResult()
                             intent.putExtra("tweet", Parcels.wrap(tweet));
+                            // The result of the intent is ok
                             setResult(RESULT_OK, intent);
                             finish();           // Close the activity (done with publishing)
                             // Will return to TimelineActivity.onActivityResult
@@ -78,6 +87,7 @@ public class ComposeActivity extends AppCompatActivity {
                         }
                     }
 
+                    // Sends a message if the call status was not success
                     @Override
                     public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                         Log.e(TAG, "onFailure to publish tweet", throwable);

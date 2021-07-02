@@ -11,15 +11,17 @@ import com.codepath.apps.restclienttemplate.models.SampleModel;
 import com.codepath.apps.restclienttemplate.models.SampleModelDao;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
+// Activity to connect to Twitter and Log In (OAuth)
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	String TAG = "LoginActitivity";
 
 	SampleModelDao sampleModelDao;
-	
+
+	// Creates the Login Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+		setContentView(R.layout.activity_login);		// layout is in activity_login.xml
 
 		final SampleModel sampleModel = new SampleModel();
 		sampleModel.setName("CodePath");
