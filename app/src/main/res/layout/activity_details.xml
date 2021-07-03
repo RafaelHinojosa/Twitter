@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    tools:context=".DetailsActivity">
+    <!--  Profile Image  -->
+    <ImageView
+        android:id="@+id/ivProfileImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        tools:srcCompat="@tools:sample/avatars" />
+    <!--  Name  -->
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        tools:text="Ronaldinho" />
+    <!--  Username  -->
+    <TextView
+        android:id="@+id/tvScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvName"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="11dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        tools:text="ronaldinho10" />
+    <!--  Replying To...  -->
+    <TextView
+        android:id="@+id/tvReplyingTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivProfileImage"
+        android:layout_marginTop="5dp"
+        tools:text="Replying to @..." />
+    <!--  Body  -->
+    <TextView
+        android:id="@+id/tvBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvReplyingTo"
+        android:layout_marginTop="5dp"
+        android:autoLink="all"
+        tools:text="Content of the Tweet" />
+    <!--  Body Image  -->
+    <ImageView
+        android:id="@+id/ivBodyImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBody"
+        android:layout_marginTop="5dp"
+        tools:srcCompat="@tools:sample/avatars" />
+    <!--  Hour  -->
+    <TextView
+        android:id="@+id/tvHour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivBodyImage"
+        android:layout_marginTop="5dp"
+        tools:text="5:00 p.m. dot" />
+    <!--  Date  -->
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivBodyImage"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/tvHour"
+        tools:text="03 jul 21" />
+    <!--  Reply Button  -->
+    <Button
+        android:id="@+id/btnReply"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/tvHour"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="2.75dp"
+        android:drawableBottom="@android:drawable/ic_menu_set_as"
+        android:text="" />
+    <!--  Retweet Button  -->
+    <Button
+        android:id="@+id/btnRetweet"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/tvHour"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/btnReply"
+        android:drawableBottom="@android:drawable/ic_menu_rotate"
+        android:text="" />
+    <!--  Like Button  -->
+    <Button
+        android:id="@+id/btnLike"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/tvHour"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/btnRetweet"
+        android:drawableBottom="@android:drawable/btn_star"
+        android:text="" />
+    <!--  Share Button  -->
+    <Button
+        android:id="@+id/btnShare"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/tvHour"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/btnLike"
+        android:drawableBottom="@android:drawable/ic_menu_share"
+        android:text="" />
+
+
+</RelativeLayout>

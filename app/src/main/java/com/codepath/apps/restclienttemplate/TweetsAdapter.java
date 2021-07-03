@@ -64,8 +64,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         return tweets.size();
     }
 
-    // Define a ViewHolder containing a specific tweet
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    // Define a clickable ViewHolder containing a specific tweet
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView ivProfileImage;
         TextView tvScreenName;
@@ -85,6 +85,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
             ivMediaTimeLine = itemView.findViewById(R.id.ivMediaTimeLine);
             btnReply = itemView.findViewById(R.id.btnReply);
+            itemView.setOnClickListener(this);
         }
 
         // Bind method changes the data of the components
@@ -116,16 +117,31 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             // Reply button
             // Usually set the onClickListener on the bind method
             btnReply.setOnClickListener(new Button.OnClickListener() {
+                // Activities when reply button is clicked
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ReplyActivity.class);
-                    // putExtra(name to identify this intent, what I am puting into the intent)
+                    // putExtra(name to identify this intent, what I am putting into the intent)
                     intent.putExtra("tweetId", Parcels.wrap(tweet));
                     // StartActivityForResult is for activities so we make the context an activity
                     // We'll expect a result in TimelineActivity.onActivityResult
                     ((TimelineActivity) context).startActivityForResult(intent, TimelineActivity.REPLY_REQUEST_CODE);
                 }
             });
+        }
+
+        // OnClick on the ViewHolder (Tweet) to see its details
+        @Override
+        public void onClick(View view) {
+            // Get the clicked tweet
+            int position = getAdapterPosition();
+            if(position != RecyclerView.NO_POSITION) {
+                Tweet tweet = tweets.get(position);
+                // Make intent to pass the tweet to Details Activity
+                Intent intent = new Intent(context, DetailsActivity.class);
+                intent.putExtra("tweetDetails", Parcels.wrap(tweet));
+                context.startActivity(intent);
+            }
         }
     }
 
