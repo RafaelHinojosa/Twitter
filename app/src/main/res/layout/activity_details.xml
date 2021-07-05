@@ -22,7 +22,7 @@
         android:layout_toEndOf="@+id/ivProfileImage"
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
-        android:textColor="#000000"
+        android:textColor="#14171A"
         android:textStyle="bold"
         tools:text="Ronaldinho" />
     <!--  Username  -->
@@ -34,6 +34,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="11dp"
         android:layout_toEndOf="@+id/ivProfileImage"
+        android:textColor="#657786"
         tools:text="ronaldinho10" />
     <!--  Replying To...  -->
     <TextView
@@ -42,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivProfileImage"
         android:layout_marginTop="5dp"
+        android:textColor="#657786"
         tools:text="Replying to @..." />
     <!--  Body  -->
     <TextView
@@ -51,6 +53,9 @@
         android:layout_below="@+id/tvReplyingTo"
         android:layout_marginTop="5dp"
         android:autoLink="all"
+        android:textColor="#14171A"
+        android:textColorHint="#657786"
+        android:textSize="16sp"
         tools:text="Content of the Tweet" />
     <!--  Body Image  -->
     <ImageView
@@ -67,6 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivBodyImage"
         android:layout_marginTop="5dp"
+        android:textColor="#657786"
         tools:text="5:00 p.m. dot" />
     <!--  Date  -->
     <TextView
@@ -77,6 +83,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/tvHour"
+        android:textColor="#657786"
         tools:text="03 jul 21" />
     <!--  Reply Button  -->
     <ImageView

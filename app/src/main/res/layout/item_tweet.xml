@@ -25,7 +25,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginBottom="2dp"
         android:layout_toEndOf="@+id/ivProfileImage"
-        android:textColor="#000000"
+        android:textColor="#14171A"
         android:textStyle="bold"
         tools:text="Ronaldinho" />
     <!--  Username  -->
@@ -37,6 +37,7 @@
         android:layout_marginStart="9dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/tvName"
+        android:textColor="#657786"
         tools:text="ronaldinho10" />
     <!--  Created At  -->
     <TextView
@@ -48,6 +49,7 @@
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/tvScreenName"
         android:maxLines="1"
+        android:textColor="#657786"
         tools:text="12h" />
     <!--  Body  -->
     <TextView
@@ -59,7 +61,9 @@
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:autoLink="all"
-        android:textColor="#000000"
+        android:textColor="#14171A"
+        android:textColorHint="#657786"
+        android:textSize="16sp"
         tools:text="This is my first tweet! " />
     <!--  Media Image  -->
     <ImageView

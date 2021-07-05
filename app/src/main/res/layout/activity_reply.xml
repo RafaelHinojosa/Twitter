@@ -32,6 +32,9 @@
             android:hint="Reply"
             android:inputType="textMultiLine"
             android:minLines="5"
+            android:textColor="#14171A"
+            android:textColorHint="#657786"
+            android:textSize="16sp"
             tools:layout_editor_absoluteX="88dp"
             tools:layout_editor_absoluteY="92dp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -54,6 +57,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="57dp"
+        android:textColor="#657786"
         android:text="Replying to @" />
 
     <TextView

@@ -17,7 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.codepath.apps.restclienttemplate.databinding.ActivityLoginBinding;
+import com.codepath.apps.restclienttemplate.databinding.ItemTweetBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import org.jetbrains.annotations.NotNull;
@@ -35,6 +37,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
 
     String TAG = "TweetsAdapter";
+    ItemTweetBinding binding;
     Context context;
     List<Tweet> tweets;
 
@@ -49,8 +52,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
-        return new ViewHolder(view);
+        binding = ItemTweetBinding.inflate(LayoutInflater.from(context), parent, false);
+        return new TweetsAdapter.ViewHolder(binding.getRoot());
     }
 
     // Bind values based on the position of the element
@@ -83,15 +86,15 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         // Associate variables with existing ids in item_tweet.xml
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
-            tvScreenName = itemView.findViewById(R.id.tvScreenName);
-            tvName = itemView.findViewById(R.id.tvName);
-            tvBody = itemView.findViewById(R.id.tvBody);
-            tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
-            ivMediaTimeLine = itemView.findViewById(R.id.ivMediaTimeLine);
-            ivReply = itemView.findViewById(R.id.ivReply);
-            ivRetweet = itemView.findViewById(R.id.ivRetweet);
-            ivLike = itemView.findViewById(R.id.ivLike);
+            ivProfileImage = binding.ivProfileImage;
+            tvScreenName = binding.tvScreenName;
+            tvName = binding.tvName;
+            tvBody = binding.tvBody;
+            tvCreatedAt = binding.tvCreatedAt;
+            ivMediaTimeLine = binding.ivMediaTimeLine;
+            ivReply = binding.ivReply;
+            ivRetweet = binding.ivRetweet;
+            ivLike = binding.ivLike;
             itemView.setOnClickListener(this);
         }
 
@@ -105,7 +108,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             // Profile picture
             Glide.with(context)
                     .load(tweet.user.profileImageUrl)
-                    .transform(new RoundedCornersTransformation(200, 10))
+                    .centerCrop()
+                    .transform(new CircleCrop())
                     .into(ivProfileImage);
             // Set image published if there is one
             Log.d(TAG, tweet.media_url_https);
@@ -113,7 +117,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 ivMediaTimeLine.setVisibility(View.VISIBLE);
                 Glide.with(context)
                         .load(tweet.media_url_https)
-                        //.transform(new RoundedCornersTransformation(40, 0))
+                        //.transform(new RoundedCornersTransformation(40, 10))
                         .into(ivMediaTimeLine);
             }
             else {

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ComposeActivity">
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tvCharCounter"
         android:layout_width="match_parent"
@@ -32,6 +31,8 @@
             android:hint="What's Happening?"
             android:inputType="textMultiLine"
             android:minLines="5"
+            android:textColor="#14171A"
+            android:textColorHint="#657786"
             tools:layout_editor_absoluteX="88dp"
             tools:layout_editor_absoluteY="92dp" />
     </com.google.android.material.textfield.TextInputLayout>

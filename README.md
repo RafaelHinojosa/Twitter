@@ -2,7 +2,7 @@
 
 **Twitter App** is an android app that allows a user to view their Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
-Time spent: **14** hours spent in total
+Time spent: **17** hours spent in total
 
 ## User Stories
 
@@ -23,18 +23,18 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-* [ ] User is using **"Twitter branded" colors and styles**
+* [x] User is using **"Twitter branded" colors and styles**
 * [ ] User sees an **indeterminate progress indicator** when any background or network task is happening
 * [x] User can **select "reply" from home timeline to respond to a tweet**
   * [x] User that wrote the original tweet is **automatically "@" replied in compose**
-* [ ] User can tap a tweet to **open a detailed tweet view**
-  * [ ] User can **take favorite (and unfavorite) or retweet** actions on a tweet
+* [x] User can tap a tweet to **open a detailed tweet view**
+  * [x] User can **take favorite (and unfavorite) or retweet** actions on a tweet
 * [ ] User can view more tweets as they scroll with infinite pagination
 * [ ] Compose tweet functionality is built using modal overlay
 * [x] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
-* [ ] Replace all icon drawables and other static image assets with [vector drawables](http://guides.codepath.org/android/Drawables#vector-drawables) where appropriate.
+* [x] Replace all icon drawables and other static image assets with [vector drawables](http://guides.codepath.org/android/Drawables#vector-drawables) where appropriate.
 * [ ] User can view following / followers list through any profile they view.
-* [ ] Use the View Binding library to reduce view boilerplate.
+* [x] Use the View Binding library to reduce view boilerplate.
 * [ ] On the Twitter timeline, apply scrolling effects such as [hiding/showing the toolbar](http://guides.codepath.org/android/Using-the-App-ToolBar#reacting-to-scroll) by implementing [CoordinatorLayout](http://guides.codepath.org/android/Handling-Scrolls-with-CoordinatorLayout#responding-to-scroll-events).
 * [ ] User can **open the twitter app offline and see last loaded tweets**. Persisted in SQLite tweets are refreshed on every application launch. While "live data" is displayed when app can get it from Twitter API, it is also saved for use in offline mode.
 
@@ -52,6 +52,8 @@ The biggest challenge I faced was to reply a tweet. It was complex because of al
 The second biggest challenge I faced was the last required user story, the one that shows embbeded images in the app. The challenge was to get the information from the JSON, based on Twitter's official documentation. Although it was challenging, I learned and understood more about how to work with JSON and extracting data from it.
 
 Note for the bonus stories: the user can click on the links on the timeline, not on the details view because there is no details view implemented. 
+
+Obtained some of the colors [here](https://usbrandcolors.com/twitter-colors/)
 
 ## Open-source libraries used
 

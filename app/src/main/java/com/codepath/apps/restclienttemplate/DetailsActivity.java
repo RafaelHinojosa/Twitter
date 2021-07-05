@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -90,7 +91,8 @@ public class DetailsActivity extends AppCompatActivity {
         // Profile Image
         Glide.with(this)
             .load(tweet.user.profileImageUrl)
-            .transform(new RoundedCornersTransformation(30, 10))
+            .centerCrop()
+            .transform(new CircleCrop())
             .into(ivProfileImage);
         // Body Image (if exists)
         if(tweet.media_url_https != null) {
