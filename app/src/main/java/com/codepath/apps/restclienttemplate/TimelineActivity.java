@@ -35,6 +35,7 @@ public class TimelineActivity extends AppCompatActivity {
     // Can be any number but must be UNIQUE
     public final int POST_REQUEST_CODE = 20;
     public static final int REPLY_REQUEST_CODE = 25;
+    public static final int LIKE_REQUEST_CODE = 30;
 
     List<Tweet> tweets;
     TweetsAdapter adapter;

@@ -17,6 +17,7 @@ public class Tweet {
     // Tweet attributes
     public String body;
     public String createdAt;
+    public String favorited;
     public User user;
     public String media_url_https;
     public String id_str;
@@ -29,6 +30,7 @@ public class Tweet {
         Tweet tweet = new Tweet();
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
+        tweet.favorited = jsonObject.getString("favorited");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.id_str = jsonObject.getString("id_str");
 
@@ -49,6 +51,7 @@ public class Tweet {
         return tweet;
     }
 
+    // Puts all the Tweets obtained in JSON format to an ArrayList
     public static List<Tweet> fromJsonArray(JSONArray jsonArray) throws JSONException {
         List<Tweet> tweets = new ArrayList<>();
         for(int i=0; i<jsonArray.length(); i++) {
@@ -58,6 +61,7 @@ public class Tweet {
         return tweets;
     }
 
+    // Returns the tweet id string
     public String getTweetId() {
         return id_str;
     }

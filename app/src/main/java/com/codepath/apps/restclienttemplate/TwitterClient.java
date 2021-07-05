@@ -1,6 +1,8 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.app.DownloadManager;
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -72,6 +74,23 @@ public class TwitterClient extends OAuthBaseClient {
         params.put("auto_populate_reply_metadata", true);   // Flag confirming that this is a reply
         client.post(apiUrl, params, "", handler);
         // Handler indicates success or failure in the post request
+    }
+
+    // User likes/dislikes a tweet
+    public void likeTweet(String id_str, boolean setFavorite, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("id", id_str);
+        
+        // Client likes a tweet
+        if(setFavorite) {
+            String apiUrl = getApiUrl("favorites/create");
+            client.post(apiUrl, params, "", handler);
+        }
+        // Client dislikes a tweet
+        else {
+            String apiUrl = getApiUrl("favorites/destroy");
+            client.post(apiUrl, params, "", handler);
+        }
     }
 
     // Algo for get/post requests

@@ -2,22 +2,31 @@ package com.codepath.apps.restclienttemplate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Movie;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
+import org.json.JSONException;
 import org.parceler.Parcels;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import okhttp3.Headers;
 
 // Activity class to see the details of a Tweet
 public class DetailsActivity extends AppCompatActivity {
@@ -33,12 +42,13 @@ public class DetailsActivity extends AppCompatActivity {
     ImageView ivBodyImage;
     TextView tvHour;
     TextView tvDate;
-    Button btnReply;
-    Button btnRetweet;
-    Button btnLike;
-    Button btnShare;
+    ImageView ivReply;
+    ImageView ivRetweet;
+    ImageView ivLike;
+    ImageView ivShare;
 
     Tweet tweet;
+    TwitterClient client;
 
     // Creates the view and associates variables to the view's components
     @Override
@@ -55,10 +65,10 @@ public class DetailsActivity extends AppCompatActivity {
         ivBodyImage = findViewById(R.id.ivBodyImage);
         tvHour = findViewById(R.id.tvHour);
         tvDate = findViewById(R.id.tvDate);
-        btnReply = findViewById(R.id.btnReply);
-        btnRetweet = findViewById(R.id.btnRetweet);
-        btnLike = findViewById(R.id.btnLike);
-        btnShare = findViewById(R.id.btnShare);
+        ivReply = findViewById(R.id.ivReply);
+        ivRetweet = findViewById(R.id.ivRetweet);
+        ivLike = findViewById(R.id.ivLike);
+        ivShare = findViewById(R.id.ivShare);
 
         tweet = Parcels.unwrap(getIntent().getParcelableExtra("tweetDetails"));
         bind(tweet);
@@ -95,7 +105,36 @@ public class DetailsActivity extends AppCompatActivity {
         // Set onClickListeners
         // Reply
         // Retweet
+
         // Like
+        // Sets/Unsets a tweet as favorite according to its favorited state
+        /*
+        btnLike.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DetailsActivity.this, "This is a " + tweet.favorited + "tweet", Toast.LENGTH_SHORT).show();
+
+                // If actual status is true, then we destroy the favorite status (false), else create it (true)
+                final boolean setFavorite = !tweet.favorited.equals("true");     // Inverts the favorited state to the variable
+
+                client.likeTweet(tweet.id_str, setFavorite, new JsonHttpResponseHandler() {
+                    // If the call status (handler) is success, it is obtained to be in the timeline
+                    @Override
+                    public void onSuccess(int statusCode, Headers headers, JSON json) {
+                        Log.i(TAG, "onSuccess to like/unlike tweet");
+
+                    }
+
+                    // Sends a message if the call status was not success
+                    @Override
+                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                        Log.e(TAG, "onFailure to publish tweet", throwable);
+                    }
+                });
+            }
+        });
+        */
         // Share
     }
 

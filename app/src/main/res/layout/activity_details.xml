@@ -79,48 +79,44 @@
         android:layout_toEndOf="@+id/tvHour"
         tools:text="03 jul 21" />
     <!--  Reply Button  -->
-    <Button
-        android:id="@+id/btnReply"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
+    <ImageView
+        android:id="@+id/ivReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tvHour"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginStart="2.75dp"
-        android:drawableBottom="@android:drawable/ic_menu_set_as"
-        android:text="" />
+        app:srcCompat="@drawable/ic_vector_compose_dm" />
     <!--  Retweet Button  -->
-    <Button
-        android:id="@+id/btnRetweet"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
+    <ImageView
+        android:id="@+id/ivRetweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tvHour"
         android:layout_marginStart="45dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/btnReply"
-        android:drawableBottom="@android:drawable/ic_menu_rotate"
-        android:text="" />
+        android:layout_toEndOf="@+id/ivReply"
+        app:srcCompat="@drawable/ic_vector_retweet_stroke" />
     <!--  Like Button  -->
-    <Button
-        android:id="@+id/btnLike"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
+    <ImageView
+        android:id="@+id/ivLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tvHour"
         android:layout_marginStart="45dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/btnRetweet"
-        android:drawableBottom="@android:drawable/btn_star"
-        android:text="" />
+        android:layout_toEndOf="@+id/ivRetweet"
+        app:srcCompat="@drawable/ic_vector_heart_stroke"/>
     <!--  Share Button  -->
-    <Button
-        android:id="@+id/btnShare"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
+    <ImageView
+        android:id="@+id/ivShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tvHour"
         android:layout_marginStart="45dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/btnLike"
-        android:drawableBottom="@android:drawable/ic_menu_share"
-        android:text="" />
+        android:layout_toEndOf="@+id/ivLike"
+        app:srcCompat="@android:drawable/ic_menu_share" />
 
 
 </RelativeLayout>

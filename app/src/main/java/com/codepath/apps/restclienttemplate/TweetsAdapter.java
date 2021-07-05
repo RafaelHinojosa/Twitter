@@ -73,7 +73,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvBody;
         TextView tvCreatedAt;
         ImageView ivMediaTimeLine;
-        Button btnReply;
+        ImageView ivReply;
 
         // Associate variables with existing ids in item_tweet.xml
         public ViewHolder(@NonNull View itemView) {
@@ -84,7 +84,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody = itemView.findViewById(R.id.tvBody);
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
             ivMediaTimeLine = itemView.findViewById(R.id.ivMediaTimeLine);
-            btnReply = itemView.findViewById(R.id.btnReply);
+            ivReply = itemView.findViewById(R.id.ivReply);
             itemView.setOnClickListener(this);
         }
 
@@ -116,7 +116,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
             // Reply button
             // Usually set the onClickListener on the bind method
-            btnReply.setOnClickListener(new Button.OnClickListener() {
+            ivReply.setOnClickListener(new Button.OnClickListener() {
                 // Activities when reply button is clicked
                 @Override
                 public void onClick(View view) {

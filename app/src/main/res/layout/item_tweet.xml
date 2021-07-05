@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp">
-
+    <!--  Profile Image  -->
     <ImageView
         android:id="@+id/ivProfileImage"
         android:layout_width="50dp"
@@ -15,51 +15,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/tvScreenName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/tvName"
-        tools:text="ronaldinho10" />
-
-    <TextView
-        android:id="@+id/tvBody"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvScreenName"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="2dp"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        android:autoLink="all"
-        android:textColor="#000000"
-        tools:text="This is my first tweet! " />
-
-    <TextView
-        android:id="@+id/tvCreatedAt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="1dp"
-        android:layout_toEndOf="@+id/tvScreenName"
-        tools:text="12h" />
-
-    <ImageView
-        android:id="@+id/ivMediaTimeLine"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvBody"
-        android:layout_alignStart="@+id/tvBody"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="0dp"
-        tools:srcCompat="@tools:sample/avatars" />
-
+    <!-- Name -->
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
@@ -72,17 +28,89 @@
         android:textColor="#000000"
         android:textStyle="bold"
         tools:text="Ronaldinho" />
-
-    <Button
-        android:id="@+id/btnReply"
-        android:layout_width="63dp"
-        android:layout_height="43dp"
+    <!--  Username  -->
+    <TextView
+        android:id="@+id/tvScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/tvName"
+        tools:text="ronaldinho10" />
+    <!--  Created At  -->
+    <TextView
+        android:id="@+id/tvCreatedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/tvScreenName"
+        android:maxLines="1"
+        tools:text="12h" />
+    <!--  Body  -->
+    <TextView
+        android:id="@+id/tvBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvScreenName"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:autoLink="all"
+        android:textColor="#000000"
+        tools:text="This is my first tweet! " />
+    <!--  Media Image  -->
+    <ImageView
+        android:id="@+id/ivMediaTimeLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBody"
+        android:layout_alignStart="@+id/tvBody"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp"
+        tools:srcCompat="@tools:sample/avatars" />
+    <!-- Reply Button -->
+    <ImageView
+        android:id="@+id/ivReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/ivMediaTimeLine"
         android:layout_alignStart="@+id/tvBody"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="1dp"
-        android:backgroundTint="#FFFFFF"
-        android:drawableBottom="@android:drawable/ic_menu_set_as"
-        android:textSize="8sp" />
-
+        android:layout_marginTop="5dp"
+        app:srcCompat="@drawable/ic_vector_compose_dm" />
+    <!--  Retweet Button  -->
+    <ImageView
+        android:id="@+id/ivRetweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivMediaTimeLine"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ivReply"
+        app:srcCompat="@drawable/ic_vector_retweet_stroke" />
+    <!--  Like Button  -->
+    <ImageView
+        android:id="@+id/ivLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivMediaTimeLine"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ivRetweet"
+        app:srcCompat="@drawable/ic_vector_heart_stroke"/>
+    <!--  Share Button  -->
+    <ImageView
+        android:id="@+id/ivShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivMediaTimeLine"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ivLike"
+        app:srcCompat="@android:drawable/ic_menu_share" />
 </RelativeLayout>

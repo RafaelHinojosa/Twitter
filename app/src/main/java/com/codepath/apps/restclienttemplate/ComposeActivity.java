@@ -66,14 +66,12 @@ public class ComposeActivity extends AppCompatActivity {
                 Toast.makeText(ComposeActivity.this, tweetContent, Toast.LENGTH_SHORT).show();
                 // API Call to publish the tweet
                 client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
-                    // If the call status is success, it is obtained to be in the timeline
+                    // If the call status (handler) is success, it is obtained to be in the timeline
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                         Log.i(TAG, "onSuccess to publish tweet");
                         try {
                             Tweet tweet = Tweet.fromJson(json.jsonObject);
-                            Log.i(TAG, "Published Tweet: " + tweet.body);
-
                             // Pass the new tweet through an intent
                             Intent intent = new Intent();
                             // This tweet will be received in TimelineActivity.onActivityResult()
