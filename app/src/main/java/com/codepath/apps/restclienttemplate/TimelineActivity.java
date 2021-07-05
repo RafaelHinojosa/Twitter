@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -36,11 +37,12 @@ public class TimelineActivity extends AppCompatActivity {
     public final int POST_REQUEST_CODE = 20;
     public static final int REPLY_REQUEST_CODE = 25;
     public static final int LIKE_REQUEST_CODE = 30;
+    public static final int RETWEET_REQUEST_CODE = 40;
 
     List<Tweet> tweets;
     TweetsAdapter adapter;
+    public static TwitterClient client;
 
-    TwitterClient client;
     RecyclerView rvTweets;
     Button btnLogout;
     private SwipeRefreshLayout swipeContainer;
@@ -197,6 +199,37 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.d(TAG, "Failed to update: " + throwable.toString());
+            }
+        });
+    }
+
+    // User retweets/unretweets a specific tweet
+    public static void changeRetweetStatus(String id_str, boolean retweet) {
+        // Not selected, then select and retweet
+        client.retweet(id_str, retweet, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "Retweet status changed correctly");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d(TAG, "Could not change Retweet status");
+            }
+        });
+    }
+
+    // User likes/unlikes a tweet
+    public static void changeFavoriteStatus(String id_str, boolean setFavorite) {
+        client.likeTweet(id_str, setFavorite, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "Tweet Favorite Status Changed");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d(TAG, "Could not change the favorite status of the tweet");
             }
         });
     }

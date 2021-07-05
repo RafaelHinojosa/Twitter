@@ -18,6 +18,7 @@ public class Tweet {
     public String body;
     public String createdAt;
     public String favorited;
+    public String retweeted;
     public User user;
     public String media_url_https;
     public String id_str;
@@ -31,6 +32,7 @@ public class Tweet {
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.favorited = jsonObject.getString("favorited");
+        tweet.retweeted = jsonObject.getString("retweeted");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.id_str = jsonObject.getString("id_str");
 

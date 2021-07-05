@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
 import org.jetbrains.annotations.NotNull;
 import org.parceler.Parcels;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -74,6 +76,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvCreatedAt;
         ImageView ivMediaTimeLine;
         ImageView ivReply;
+        ImageView ivRetweet;
+        ImageView ivLike;
 
         // Associate variables with existing ids in item_tweet.xml
         public ViewHolder(@NonNull View itemView) {
@@ -85,6 +89,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
             ivMediaTimeLine = itemView.findViewById(R.id.ivMediaTimeLine);
             ivReply = itemView.findViewById(R.id.ivReply);
+            ivRetweet = itemView.findViewById(R.id.ivRetweet);
+            ivLike = itemView.findViewById(R.id.ivLike);
             itemView.setOnClickListener(this);
         }
 
@@ -126,6 +132,60 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     // StartActivityForResult is for activities so we make the context an activity
                     // We'll expect a result in TimelineActivity.onActivityResult
                     ((TimelineActivity) context).startActivityForResult(intent, TimelineActivity.REPLY_REQUEST_CODE);
+                }
+            });
+
+            // Retweet Button Color
+            if(tweet.retweeted.equals("true")) {
+                ivRetweet.setSelected(true);
+                Glide.with(context).load(R.drawable.ic_vector_retweet).into(ivRetweet);
+            }
+            // Retweet Button ClickListener
+            ivRetweet.setOnClickListener(new View.OnClickListener() {
+                // Retweets the tweet where the button is
+                @Override
+                public void onClick(View view) {
+                    // If not retweeted, retweet
+                    if(!ivRetweet.isSelected()) {
+                        ivRetweet.setSelected(true);
+                        // Set a "bold" image
+                        Glide.with(context).load(R.drawable.ic_vector_retweet).into(ivRetweet);
+                        TimelineActivity.changeRetweetStatus(tweet.id_str, true);
+                    }
+                    // If retweeted, unretweet
+                    else {
+                        ivRetweet.setSelected(false);
+                        // Set a lightweight image
+                        Glide.with(context).load(R.drawable.ic_vector_retweet_stroke).into(ivRetweet);
+                        TimelineActivity.changeRetweetStatus(tweet.id_str, false);
+                    }
+                }
+            });
+
+            // Like Button Color
+            if(tweet.favorited.equals("true")) {
+                ivLike.setSelected(true);
+                Glide.with(context).load(R.drawable.ic_vector_heart).into(ivLike);
+            }
+            // Like Button ClickListener
+            ivLike.setOnClickListener(new View.OnClickListener() {
+                // Likes or unlikes a tweet
+                @Override
+                public void onClick(View view) {
+                    // If tweet is not liked, like it
+                    if(!ivLike.isSelected()) {
+                        ivLike.setSelected(true);
+                        // Set a lightweight image
+                        Glide.with(context).load(R.drawable.ic_vector_heart).into(ivLike);
+                        TimelineActivity.changeFavoriteStatus(tweet.id_str, true);
+                    }
+                    // If tweet is liked, unlike it
+                    else {
+                        ivLike.setSelected(false);
+                        // Set a lightweight image
+                        Glide.with(context).load(R.drawable.ic_vector_heart_stroke).into(ivLike);
+                        TimelineActivity.changeFavoriteStatus(tweet.id_str, false);
+                    }
                 }
             });
         }

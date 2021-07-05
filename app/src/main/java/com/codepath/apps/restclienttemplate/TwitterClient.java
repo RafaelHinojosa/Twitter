@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.app.AuthenticationRequiredException;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.util.Log;
@@ -78,19 +79,33 @@ public class TwitterClient extends OAuthBaseClient {
 
     // User likes/dislikes a tweet
     public void likeTweet(String id_str, boolean setFavorite, JsonHttpResponseHandler handler) {
+        String apiUrl;
         RequestParams params = new RequestParams();
         params.put("id", id_str);
-        
-        // Client likes a tweet
+
+        // User likes a tweet
         if(setFavorite) {
-            String apiUrl = getApiUrl("favorites/create");
-            client.post(apiUrl, params, "", handler);
+            apiUrl = getApiUrl("favorites/create.json");
         }
-        // Client dislikes a tweet
+        // User no longer likes a tweet
         else {
-            String apiUrl = getApiUrl("favorites/destroy");
-            client.post(apiUrl, params, "", handler);
+            apiUrl = getApiUrl("favorites/destroy.json");
         }
+        client.post(apiUrl, params, "", handler);
+    }
+
+    // User retweets/unretweets a tweet
+    public void retweet(String id_str, boolean retweet, JsonHttpResponseHandler handler) {
+        String apiUrl;
+        // User retweets
+        if(retweet) {
+            apiUrl = getApiUrl("statuses/retweet/" + id_str + ".json");
+        }
+        // User UNretweets
+        else {
+            apiUrl = getApiUrl("statuses/unretweet/" + id_str + ".json");
+        }
+        client.post(apiUrl, handler);
     }
 
     // Algo for get/post requests

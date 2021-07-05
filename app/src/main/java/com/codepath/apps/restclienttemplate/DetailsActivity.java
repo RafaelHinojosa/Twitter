@@ -105,36 +105,7 @@ public class DetailsActivity extends AppCompatActivity {
         // Set onClickListeners
         // Reply
         // Retweet
-
         // Like
-        // Sets/Unsets a tweet as favorite according to its favorited state
-        /*
-        btnLike.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(DetailsActivity.this, "This is a " + tweet.favorited + "tweet", Toast.LENGTH_SHORT).show();
-
-                // If actual status is true, then we destroy the favorite status (false), else create it (true)
-                final boolean setFavorite = !tweet.favorited.equals("true");     // Inverts the favorited state to the variable
-
-                client.likeTweet(tweet.id_str, setFavorite, new JsonHttpResponseHandler() {
-                    // If the call status (handler) is success, it is obtained to be in the timeline
-                    @Override
-                    public void onSuccess(int statusCode, Headers headers, JSON json) {
-                        Log.i(TAG, "onSuccess to like/unlike tweet");
-
-                    }
-
-                    // Sends a message if the call status was not success
-                    @Override
-                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                        Log.e(TAG, "onFailure to publish tweet", throwable);
-                    }
-                });
-            }
-        });
-        */
         // Share
     }
 

@@ -81,8 +81,8 @@
     <!--  Reply Button  -->
     <ImageView
         android:id="@+id/ivReply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_below="@+id/tvHour"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
@@ -90,8 +90,8 @@
     <!--  Retweet Button  -->
     <ImageView
         android:id="@+id/ivRetweet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_below="@+id/tvHour"
         android:layout_marginStart="45dp"
         android:layout_marginTop="5dp"
@@ -100,8 +100,8 @@
     <!--  Like Button  -->
     <ImageView
         android:id="@+id/ivLike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_below="@+id/tvHour"
         android:layout_marginStart="45dp"
         android:layout_marginTop="5dp"
@@ -110,8 +110,8 @@
     <!--  Share Button  -->
     <ImageView
         android:id="@+id/ivShare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_below="@+id/tvHour"
         android:layout_marginStart="45dp"
         android:layout_marginTop="5dp"
