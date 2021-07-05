@@ -108,6 +108,4 @@ public class DetailsActivity extends AppCompatActivity {
         // Like
         // Share
     }
-
-
 }

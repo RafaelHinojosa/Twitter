@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.databinding.ActivityComposeBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.textfield.TextInputLayout;
@@ -35,13 +36,17 @@ public class ComposeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compose);          // layout found in activity_compose.xml
+
+        // Binding
+        ActivityComposeBinding binding = ActivityComposeBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         client = TwitterApp.getRestClient(this);
 
-        etCompose = findViewById(R.id.etReply);
-        btnTweet = findViewById(R.id.btnReplyPublish);
-        tvCharCounter = findViewById(R.id.tvCharCounter);
+        etCompose = binding.etReply;
+        btnTweet = binding.btnReplyPublish;
+        tvCharCounter = binding.tvCharCounter;
         tvCharCounter.setCounterEnabled(true);
         tvCharCounter.setCounterMaxLength(MAX_TWEET_LENGTH);
 

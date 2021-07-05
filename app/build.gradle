@@ -36,6 +36,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    // View Binding Library changed because did not work with buildFeatures { viewBinding true }
+    viewBinding {
+        enabled=true
+    }
 }
 
 dependencies {

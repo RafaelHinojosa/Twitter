@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.databinding.ActivityLoginBinding;
+import com.codepath.apps.restclienttemplate.databinding.ActivityReplyBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.textfield.TextInputLayout;
@@ -39,14 +41,18 @@ public class ReplyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reply);        // layout of the act. is in activity_reply.xml
+
+        // Binding
+        ActivityReplyBinding binding = ActivityReplyBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         client = TwitterApp.getRestClient(this);
 
-        tvUserReplied = findViewById(R.id.tvUserReplied);
-        etReply = findViewById(R.id.etReply);
-        btnReplyPublish = findViewById(R.id.btnReplyPublish);
-        tvCharCounter = findViewById(R.id.tvCharCounter);
+        tvUserReplied = binding.tvUserReplied;
+        etReply = binding.etReply;
+        btnReplyPublish = binding.btnReplyPublish;
+        tvCharCounter = binding.tvCharCounter;
         tvCharCounter.setCounterEnabled(true);
         tvCharCounter.setCounterMaxLength(MAX_TWEET_LENGTH);
 
