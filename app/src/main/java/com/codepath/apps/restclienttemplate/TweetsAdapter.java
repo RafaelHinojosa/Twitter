@@ -135,12 +135,25 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     ((TimelineActivity) context).startActivityForResult(intent, TimelineActivity.REPLY_REQUEST_CODE);
                 }
             });
-
-            // Retweet Button Color
+            // Color retweet button if tweet is retweeted
             if(tweet.retweeted.equals("true")) {
                 ivRetweet.setSelected(true);
                 Glide.with(context).load(R.drawable.ic_vector_retweet).into(ivRetweet);
             }
+            else {
+                ivRetweet.setSelected(false);
+                Glide.with(context).load(R.drawable.ic_vector_retweet_stroke).into(ivRetweet);
+            }
+            // Color the Favorite heart if the tweet is liked
+            if(tweet.favorited.equals("true")) {
+                ivLike.setSelected(true);
+                Glide.with(context).load(R.drawable.ic_vector_heart).into(ivLike);
+            }
+            else {
+                ivLike.setSelected(false);
+                Glide.with(context).load(R.drawable.ic_vector_heart_stroke).into(ivLike);
+            }
+
             // Retweet Button ClickListener
             ivRetweet.setOnClickListener(new View.OnClickListener() {
                 // Retweets the tweet where the button is
@@ -162,12 +175,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     }
                 }
             });
-
-            // Like Button Color
-            if(tweet.favorited.equals("true")) {
-                ivLike.setSelected(true);
-                Glide.with(context).load(R.drawable.ic_vector_heart).into(ivLike);
-            }
             // Like Button ClickListener
             ivLike.setOnClickListener(new View.OnClickListener() {
                 // Likes or unlikes a tweet

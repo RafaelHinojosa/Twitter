@@ -11,6 +11,7 @@ import android.graphics.Movie;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.provider.ContactsContract;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -102,10 +103,71 @@ public class DetailsActivity extends AppCompatActivity {
             ivBodyImage.setVisibility(View.GONE);
         }
 
+        // Color the retweet button if the tweet is retweeted
+        if(tweet.retweeted.equals("true")) {
+            ivRetweet.setSelected(true);
+            Glide.with(DetailsActivity.this).load(R.drawable.ic_vector_retweet).into(ivRetweet);
+        }
+        else {
+            ivRetweet.setSelected(false);
+            Glide.with(DetailsActivity.this).load(R.drawable.ic_vector_retweet_stroke).into(ivRetweet);
+        }
+
+        // Color the Favorite heart if the tweet is liked
+        if(tweet.favorited.equals("true")) {
+            ivLike.setSelected(true);
+            Glide.with(DetailsActivity.this).load(R.drawable.ic_vector_heart).into(ivLike);
+        }
+        else {
+            ivLike.setSelected(false);
+            Glide.with(DetailsActivity.this).load(R.drawable.ic_vector_heart_stroke).into(ivLike);
+        }
+
         // Set onClickListeners
         // Reply
         // Retweet
+        ivRetweet.setOnClickListener(new View.OnClickListener() {
+            // Retweets the tweet where the button is
+            @Override
+            public void onClick(View view) {
+                // If not retweeted, retweet
+                if(!ivRetweet.isSelected()) {
+                    ivRetweet.setSelected(true);
+                    // Set a "bold" image
+                    Glide.with(DetailsActivity.this).load(R.drawable.ic_vector_retweet).into(ivRetweet);
+                    TimelineActivity.changeRetweetStatus(tweet.id_str, true);
+                }
+                // If retweeted, unretweet
+                else {
+                    ivRetweet.setSelected(false);
+                    // Set a lightweight image
+                    Glide.with(DetailsActivity.this).load(R.drawable.ic_vector_retweet_stroke).into(ivRetweet);
+                    TimelineActivity.changeRetweetStatus(tweet.id_str, false);
+                }
+            }
+        });
         // Like
+        // Like Button ClickListener
+        ivLike.setOnClickListener(new View.OnClickListener() {
+            // Likes or unlikes a tweet
+            @Override
+            public void onClick(View view) {
+                // If tweet is not liked, like it
+                if(!ivLike.isSelected()) {
+                    ivLike.setSelected(true);
+                    // Set a lightweight image
+                    Glide.with(DetailsActivity.this).load(R.drawable.ic_vector_heart).into(ivLike);
+                    TimelineActivity.changeFavoriteStatus(tweet.id_str, true);
+                }
+                // If tweet is liked, unlike it
+                else {
+                    ivLike.setSelected(false);
+                    // Set a lightweight image
+                    Glide.with(DetailsActivity.this).load(R.drawable.ic_vector_heart_stroke).into(ivLike);
+                    TimelineActivity.changeFavoriteStatus(tweet.id_str, false);
+                }
+            }
+        });
         // Share
     }
 }
