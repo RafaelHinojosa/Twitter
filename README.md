@@ -43,17 +43,18 @@ The following **optional** features are implemented:
 Here's a walkthrough of implemented user stories:
 
 [Video Walkthrough of MVP](http://imgur.com/a/ksZahV7.gif)
-[Video Walkthrough with some Bonus Stories] (https://imgur.com/a/XCgcfjj)
 
 GIF created with [Kap](https://getkap.co/).
 
 ## Notes
 The biggest challenge I faced was to reply a tweet. It was complex because of all the components it had: layout view, button click listener, http request through the TwitterClient and the Twitter's API and tweet data passing through some intents. It was a nice task to learn more about an integral function of the app and the API.  
 The second biggest challenge I faced was the last required user story, the one that shows embbeded images in the app. The challenge was to get the information from the JSON, based on Twitter's official documentation. Although it was challenging, I learned and understood more about how to work with JSON and extracting data from it.
+At last but not least, are retweeting and setting as favorite a tweet. These two were challenging because of their implementation (where, how, technical aspects as static classes, and more).
 
-Note for the bonus stories: the user can click on the links on the timeline, not on the details view because there is no details view implemented. 
+At the end, I think I learned lots of things, including: code organization, intents, API communication and obtaining data from JSON. Also, learned about vectors and their uses in launchers
+and inside the code.
 
-Obtained some of the colors [here](https://usbrandcolors.com/twitter-colors/)
+Obtained some of the text colors [here](https://usbrandcolors.com/twitter-colors/).
 
 ## Open-source libraries used
 

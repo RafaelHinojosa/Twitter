@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,8 +39,8 @@ public class TimelineActivity extends AppCompatActivity {
     // Can be any number but must be UNIQUE
     public final int POST_REQUEST_CODE = 20;
     public static final int REPLY_REQUEST_CODE = 25;
-    public static final int LIKE_REQUEST_CODE = 30;
-    public static final int RETWEET_REQUEST_CODE = 40;
+
+    private static MenuItem miActionProgressItem;
 
     List<Tweet> tweets;
     TweetsAdapter adapter;
@@ -102,6 +103,16 @@ public class TimelineActivity extends AppCompatActivity {
         populateHomeTimeLine();
     }
 
+    // Sets the Progress Bar
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Store instance of the menu item containing progress
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     // Creates the options menu where user can compose
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,6 +133,16 @@ public class TimelineActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Progress bar shows
+    public static void showProgressBar() {
+        miActionProgressItem.setVisible(true);
+    }
+
+    // Progress bar hides
+    public static void hideProgressBar() {
+        miActionProgressItem.setVisible(false);
     }
 
     // Method that makes data changes according to the http request done and the result of the call

@@ -21,6 +21,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.parceler.Parcels;
 
+import java.sql.Time;
+
 import okhttp3.Headers;
 
 public class ReplyActivity extends AppCompatActivity {
@@ -67,6 +69,7 @@ public class ReplyActivity extends AppCompatActivity {
             // When reply publish button is clicked
             @Override
             public void onClick(View v) {
+                TimelineActivity.showProgressBar();
                 String tweetId = tweet.id_str;
                 String tweetContent = etReply.getText().toString();
 
@@ -96,9 +99,11 @@ public class ReplyActivity extends AppCompatActivity {
                             Intent intent = new Intent();
                             intent.putExtra("tweet", Parcels.wrap(tweet));
                             setResult(RESULT_OK, intent);
+                            TimelineActivity.hideProgressBar();
                             finish();           // Close the activity (done with publishing)
                             // Will return to TimelineActivity.onActivityResult
                         } catch (JSONException e) {
+                            TimelineActivity.hideProgressBar();
                             e.printStackTrace();
                         }
                     }
@@ -106,6 +111,7 @@ public class ReplyActivity extends AppCompatActivity {
                     // This executes if the status of the call is not success
                     @Override
                     public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                        TimelineActivity.hideProgressBar();
                         Log.e(TAG, "onFailure to reply to tweet", throwable);
                     }
                 });

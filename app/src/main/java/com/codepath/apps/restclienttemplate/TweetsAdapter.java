@@ -163,6 +163,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 // Retweets the tweet where the button is
                 @Override
                 public void onClick(View view) {
+                    TimelineActivity.showProgressBar();
                     // If not retweeted, retweet
                     if(!ivRetweet.isSelected()) {
                         ivRetweet.setSelected(true);
@@ -177,6 +178,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                         Glide.with(context).load(R.drawable.ic_vector_retweet_stroke).into(ivRetweet);
                         TimelineActivity.changeRetweetStatus(tweet.id_str, false);
                     }
+                    TimelineActivity.hideProgressBar();
                 }
             });
             // Like Button ClickListener
@@ -184,6 +186,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 // Likes or unlikes a tweet
                 @Override
                 public void onClick(View view) {
+                    TimelineActivity.showProgressBar();
                     // If tweet is not liked, like it
                     if(!ivLike.isSelected()) {
                         ivLike.setSelected(true);
@@ -198,6 +201,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                         Glide.with(context).load(R.drawable.ic_vector_heart_stroke).into(ivLike);
                         TimelineActivity.changeFavoriteStatus(tweet.id_str, false);
                     }
+                    TimelineActivity.hideProgressBar();
                 }
             });
         }
@@ -205,6 +209,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         // OnClick on the ViewHolder (Tweet) to see its details
         @Override
         public void onClick(View view) {
+            TimelineActivity.showProgressBar();
             // Get the clicked tweet
             int position = getAdapterPosition();
             if(position != RecyclerView.NO_POSITION) {
@@ -214,6 +219,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 intent.putExtra("tweetDetails", Parcels.wrap(tweet));
                 context.startActivity(intent);
             }
+            TimelineActivity.hideProgressBar();
         }
     }
 

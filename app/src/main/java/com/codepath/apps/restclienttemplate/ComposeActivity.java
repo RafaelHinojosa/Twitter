@@ -55,6 +55,7 @@ public class ComposeActivity extends AppCompatActivity {
             // Makes asynchronous call to the Twitter API to compose a tweet
             @Override
             public void onClick(View v) {
+                TimelineActivity.showProgressBar();
                 String tweetContent = etCompose.getText().toString();
 
                 // Checks that the tweet's body(content) is in bounds [1 - 280]
@@ -83,9 +84,11 @@ public class ComposeActivity extends AppCompatActivity {
                             intent.putExtra("tweet", Parcels.wrap(tweet));
                             // The result of the intent is ok
                             setResult(RESULT_OK, intent);
+                            TimelineActivity.hideProgressBar();
                             finish();           // Close the activity (done with publishing)
                             // Will return to TimelineActivity.onActivityResult
                         } catch (JSONException e) {
+                            TimelineActivity.hideProgressBar();
                             e.printStackTrace();
                         }
                     }
@@ -93,6 +96,7 @@ public class ComposeActivity extends AppCompatActivity {
                     // Sends a message if the call status was not success
                     @Override
                     public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                        TimelineActivity.hideProgressBar();
                         Log.e(TAG, "onFailure to publish tweet", throwable);
                     }
                 });
