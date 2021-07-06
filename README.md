@@ -43,6 +43,7 @@ The following **optional** features are implemented:
 Here's a walkthrough of implemented user stories:
 
 [Video Walkthrough of MVP](http://imgur.com/a/ksZahV7.gif)
+[Video Walkthrough of Bonus Stories](https://imgur.com/jCBsbIe)
 
 GIF created with [Kap](https://getkap.co/).
 
@@ -55,6 +56,8 @@ At the end, I think I learned lots of things, including: code organization, inte
 and inside the code.
 
 Obtained some of the text colors [here](https://usbrandcolors.com/twitter-colors/).
+
+Note: My emulator stopped connecting to the internet, so I screen recorded in my Android physical Phone.
 
 ## Open-source libraries used
 
